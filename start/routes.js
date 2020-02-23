@@ -19,8 +19,15 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+Route.group(()=>{
+    Route.post('login','UserController.login')
+    Route.post('register','UserController.register')
+    Route.get('getuser/:id','UserController.show')
+}).prefix('users')
+
 Route.get('movies', 'MovieController.index')
 Route.get('movies/:id', 'MovieController.show')
 Route.post('movies', 'MovieController.store')
+Route.post('favourites', 'FavouriteController.store')
 Route.patch('movies/:id', 'MovieController.update').middleware(['findMovie'])
 Route.delete('movies/:id', 'MovieController.delete').middleware(['findMovie'])

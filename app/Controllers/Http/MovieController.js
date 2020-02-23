@@ -74,9 +74,7 @@ class MovieController {
    * @param {View} ctx.view
    */
   async show ({ response, params:{id} }) {
-    
-    console.log(id)
-    
+        
     let movie = await Movie.query().where('id',id).first()
     
     if(movie !==null){
