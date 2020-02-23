@@ -47,7 +47,7 @@ class FavouriteController {
     const movie = await Favourite.create({ title, vote_average, overview, release_date, cover_image, background_image, user_id })
 
     response.ok({
-      message: 'Succesfully create a new movie',
+      message: 'Added to favourites',
       data: movie
     })
   }

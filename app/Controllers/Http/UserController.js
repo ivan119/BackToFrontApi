@@ -3,13 +3,17 @@ const User = use('App/Models/User')
 
 class UserController {
 
-    async register({request, response}){
+    async register({request, response,auth}){
         const { username, email, password } = request.post()
 
         const user = await User.create({ username, email, password })
-    
+
+        const token = await auth.attempt(email,password)
+
         response.ok({
-          message: 'Username created successfully.'
+          message: 'Username created successfully.',
+          data:user.id,
+          token
         })
     }
 
@@ -24,11 +28,10 @@ class UserController {
     }
 
     async show ({params:{id},response}){
-         const user = await User.find(id)
-         const res = {
-            username: user.username,
-            email: user.email
-          }
+
+         const user =  await User.find(id)
+
+         const res = { username: user.username, email: user.email }
 
           response.ok({
             res
