@@ -10,7 +10,7 @@ class UserController {
 
         response.ok({
           message: 'Username created successfully.',
-          data:user.email,
+          data:user.username,
         })
     }
 
@@ -23,10 +23,22 @@ class UserController {
         })
     }
 
-    async show ({request,response}){
-        const user = await request.ctx
-        response.ok(user)
-        console.log(user)
+    async show ({auth,params,response}){
+      
+        try{
+          return await auth.getUser()
+        }catch(error){
+          response.send('you are not logged in')
+        }
+
+      //  const user = await request.ctx
+      //  response.ok(user)
+      //  console.log(user)
+    }
+    
+
+    async logout({}){
+
     }
 
 

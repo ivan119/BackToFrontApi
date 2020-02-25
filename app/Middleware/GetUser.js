@@ -2,12 +2,12 @@
 const User = use('App/Models/User')
 
 class GetUser {
-  async handle ({ request,response}, next) {
-    //console.log('tu sam')
-     const user = await User.first()
+  async handle (ctx, next) {
 
-     request.ctx = user
-
+    ctx.user = await ctx.auth.getUser()
+    // const user = await User.first()
+    
+  //   console.log(ctx.user)
      await next()
   }
 }

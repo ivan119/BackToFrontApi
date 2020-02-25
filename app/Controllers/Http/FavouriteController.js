@@ -19,20 +19,15 @@ class FavouriteController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    
+    const favourites = await Favourite.all()
+    
+    response.ok({
+      message:'Favourite movies',
+      data: favourites
+    })
   }
-
-  /**
-   * Render a form to be used for creating a new favourite.
-   * GET favourites/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
+  
   /**
    * Create/save a new favourite.
    * POST favourites
@@ -44,11 +39,11 @@ class FavouriteController {
   async store ({ request, response }) {
     const { title, vote_average, overview, release_date, cover_image, background_image } = request.post()
 
-    const movie = await Favourite.create({ title, vote_average, overview, release_date, cover_image, background_image, user_id })
+    const favMovie = await Favourite.create({ title, vote_average, overview, release_date, cover_image, background_image, user_id })
 
     response.ok({
       message: 'Added to favourites',
-      data: movie
+      data: favMovie
     })
   }
 
@@ -61,30 +56,15 @@ class FavouriteController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params:{id}, request, response, view }) {
 
-  /**
-   * Render a form to update an existing favourite.
-   * GET favourites/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+      const favMovie = await Favourite.find(id)
 
-  /**
-   * Update favourite details.
-   * PUT or PATCH favourites/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
+      response.ok({
+        message:'Favourtie Movie',
+        data: favMovie
+      })
+
   }
 
   /**
@@ -95,7 +75,15 @@ class FavouriteController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async delete ({ params:{id}, request, response }) {
+      const favourite = await Favourite.find(id)
+
+      await favourite.delete()
+
+      response.ok({
+        message:'Favourte movie deleted.',
+        id
+      })
   }
 }
 

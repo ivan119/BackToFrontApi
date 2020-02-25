@@ -75,15 +75,16 @@ class MovieController {
    */
   async show ({ response, params:{id} }) {
         
-    let movie = await Movie.query().where('id',id).first()
-    
+   // let movie = await Movie.query().where('id',id).first()
+    const movie = await Movie.find(id)
+
     if(movie !==null){
       response.ok({
         message: 'Single movie.',
         data: movie
       })
     }else{
-      response.status(404).json({
+      response.badRequest({
         message:'No movie here',
         id
       })
@@ -144,7 +145,7 @@ class MovieController {
     await movie.delete()
 
     response.status(200).json({
-      message: 'Successfully deleted this customer.',
+      message: 'Successfully deleted this movie.',
       id
     })
   }

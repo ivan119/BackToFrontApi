@@ -22,6 +22,7 @@ Route.get('/', () => {
 Route.group(()=>{
     Route.post('login','UserController.login')
     Route.post('register','UserController.register')
+    Route.delete('logout','UserController.logout')
     Route.get('getuser','UserController.show').middleware(["getUser"])
 }).prefix('users')
 
