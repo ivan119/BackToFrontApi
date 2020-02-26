@@ -27,8 +27,9 @@ Route.group(()=>{
 }).prefix('users')
 
 Route.get('movies', 'MovieController.index')
+//Route.get('movies', 'MoviesController.getFavourite').middleware(["getUser"])
 Route.get('movies/:id', 'MovieController.show')
 Route.post('movies', 'MovieController.store')
-Route.post('favourites', 'FavouriteController.store')
+Route.post('movies/:id', 'MovieController.favourite').middleware(["getUser"])
 Route.patch('movies/:id', 'MovieController.update').middleware(['findMovie'])
 Route.delete('movies/:id', 'MovieController.delete').middleware(['findMovie'])

@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Movie extends Model {
+    users() {
+        return this.belongsToMany('App/Models/User').pivotTable('users_movies')
+    }
 }
 
 module.exports = Movie
