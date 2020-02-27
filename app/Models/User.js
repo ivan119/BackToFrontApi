@@ -27,6 +27,7 @@ class User extends Model {
     return this.belongsToMany('App/Models/Movie').pivotTable('users_movies')
   }
 
+
   /* -------------------------------- */
 
   /**

@@ -1,17 +1,18 @@
 'use strict'
 const User = use('App/Models/User')
+const Movie = use('App/Models/Movie')
 const { validate } = use('Validator')
 
 class UserController {
 
-  async edit({}){
-
-
-  }
+    async edit({}){}
 
     async index({response}){
       //todo: search, orderanje,
-      const user = await User.query().with('movies').fetch()
+      const user = await User.query().fetch()
+      response.ok(
+        user
+      )
     }
 
     async register({request, response}){
@@ -47,18 +48,28 @@ class UserController {
           })
         }
 
-   
     }
 
     async login({request,response,auth}){
-
-
+      
           const {email, password} = request.post()
           const token = await auth.attempt(email,password)
-  
-          response.ok({
-            token
-          })
+
+          const rules ={
+            email: 'required|email|max:50',
+            password: 'required|min:4'
+          }
+          const validation = await validate(request.all(), rules)
+
+          if(validation.fails()) {
+            return validation.messages()
+          }else{
+            response.ok({
+              token
+            })
+          }
+          
+     
           
     }
 
@@ -69,15 +80,18 @@ class UserController {
         }catch(error){
           response.send('you are not logged in')
         }
-
-      //  const user = await request.ctx
-      //  response.ok(user)
-      //  console.log(user)
     }
 
-    async getFavourite({requestm,response}) {
-      
-      const favourite = await User.query().whereHas()
+    async getFavourite({params:{id},response}) {
+
+      const favourite = await Movie.query().whereHas('users', subQuery =>{
+        subQuery.where('id', id)
+      }).fetch()
+
+      response.ok({
+        message:'Your favourite movies',
+        data: favourite
+      })
 
     }
 

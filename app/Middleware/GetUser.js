@@ -5,10 +5,8 @@ class GetUser {
   async handle (ctx, next) {
 
     ctx.user = await ctx.auth.getUser()
-    // const user = await User.first()
     
-  //   console.log(ctx.user)
-     await next()
+    await next()
   }
 }
 

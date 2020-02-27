@@ -23,13 +23,15 @@ Route.group(()=>{
     Route.post('login','UserController.login')
     Route.post('register','UserController.register')
     Route.delete('logout','UserController.logout')
-    Route.get('getuser','UserController.show').middleware(["getUser"])
+    Route.get('getuser','UserController.show').middleware(["getUser"]) //Get one user//
+    Route.get('index','UserController.index') //Get all users//
+    Route.get('getFavourite/:id','UserController.getFavourite')
 }).prefix('users')
 
 Route.get('movies', 'MovieController.index')
 //Route.get('movies', 'MoviesController.getFavourite').middleware(["getUser"])
 Route.get('movies/:id', 'MovieController.show')
 Route.post('movies', 'MovieController.store')
-Route.post('movies/:id', 'MovieController.favourite').middleware(["getUser"])
+//Route.post('movies/:id', 'MovieController.favourite').middleware(["getUser"])
 Route.patch('movies/:id', 'MovieController.update').middleware(['findMovie'])
 Route.delete('movies/:id', 'MovieController.delete').middleware(['findMovie'])
