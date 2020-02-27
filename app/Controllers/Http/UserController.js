@@ -67,9 +67,7 @@ class UserController {
             response.ok({
               token
             })
-          }
-          
-     
+          }  
           
     }
 
