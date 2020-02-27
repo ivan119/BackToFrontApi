@@ -9,7 +9,7 @@ class UserController {
 
     async index({response}){
       //todo: search, orderanje,
-      const user = await User.query().fetch()
+      const user = await User.query().select('id','username').fetch()
       response.ok(
         user
       )

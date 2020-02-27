@@ -24,7 +24,7 @@ Route.group(()=>{
     Route.post('register','UserController.register')
     Route.delete('logout','UserController.logout') // Do i even need this? //
     Route.get('getuser','UserController.show').middleware(["getUser"]) //Get one user//
-    Route.get('index','UserController.index') //Get all users//
+    Route.get('index','UserController.index') //Get all users by id and username //
     Route.get('getFavourite/:id','UserController.getFavourite') //Get all favouirte movies by User id //
 }).prefix('users')
 
