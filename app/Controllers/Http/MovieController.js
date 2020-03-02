@@ -18,7 +18,7 @@ class MovieController {
     const allParams = request.get()
     
     let page = allParams.page;
-    page = page ? page : 1;
+  //  page = page ? page : 1;
   //console.log(page)
     const perPage = allParams.perPage
   //console.log(limit)
@@ -32,7 +32,7 @@ class MovieController {
     }
     response.ok({
       message: 'List of movies from our database',
-      pagaination: await query.paginate(page ? page : 1, perPage)
+      pagaination: await query.paginate(page, perPage)
     })
 
   }
