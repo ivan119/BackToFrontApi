@@ -33,4 +33,4 @@ Route.get('movies/:id', 'MovieController.show') // Show singe movie by id //
 Route.post('movies', 'MovieController.store') 
 Route.post('movies/:id', 'MovieController.favourite').middleware(["getUser"]) // Post favourite movie id and user id to pivot table //
 Route.patch('movies/:id', 'MovieController.update').middleware(['findMovie']) // Update movie //
-Route.delete('movies/:id', 'MovieController.delete').middleware(['findMovie']) // Delete movie //
+Route.delete('movies/:id', 'MovieController.delete') //.middleware(['findMovie']) // Delete movie by id//

@@ -116,7 +116,7 @@ class MovieController {
   async delete ({ params: { id }, request, response }) {
 
     //todo: popraviti
-    const movie = request.post().movie
+    const movie = await Movie.findOrFail(id)
 
     await movie.delete()
 
