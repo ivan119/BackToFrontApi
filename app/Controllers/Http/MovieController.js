@@ -16,8 +16,14 @@ class MovieController {
    */
   async index ({ request, response, view }) {
     const allParams = request.get()
-  
+    
+    let page = allParams.page;
+    page = page ? page : 1;
+  //console.log(page)
+    const perPage = allParams.perPage
+  //console.log(limit)
     const query =  Movie.query()
+
     if(allParams.search){
         query.where('title','like',`%${allParams.search}%`)
     } 
@@ -26,7 +32,7 @@ class MovieController {
     }
     response.ok({
       message: 'List of movies from our database',
-      data: await query.fetch()
+      pagaination: await query.paginate(page ? page : 1, perPage)
     })
 
   }
