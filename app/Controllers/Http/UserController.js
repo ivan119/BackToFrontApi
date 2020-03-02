@@ -7,6 +7,8 @@ class UserController {
 
     async edit({}){}
 
+
+    // Fetch all users from database
     async index({response}){
       //todo: search, orderanje,
       const user = await User.query().select('id','username').fetch()
