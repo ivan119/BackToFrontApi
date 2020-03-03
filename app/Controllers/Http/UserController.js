@@ -5,7 +5,38 @@ const { validate } = use('Validator')
 
 class UserController {
 
-    async edit({}){}
+    async update ({request,params:{id},response}){
+
+      const user = await User.findOrFail(id)
+
+      const rules = {
+        username: 'required|min:4|max:15',
+        email: 'required|email|max:50',
+        password:'required'
+      }
+
+      const {username,email,password} = request.post()
+
+      user.username = username
+      user.email = email
+      user.password = password
+
+      const validation = await validate(request.all(), rules)
+      try {    
+        if(validation.fails()) {
+          return validation.messages()
+        }else{
+          await user.save()
+          response.ok({
+            message:'Successfully updated profile',
+          })
+        }
+      } catch (error) {
+        response.badRequest({
+          message:'Username or email already exist, Please chose another one'
+        })
+      }
+    }
 
 
     // Fetch all users from database
