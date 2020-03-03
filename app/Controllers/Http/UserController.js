@@ -128,6 +128,17 @@ class UserController {
 
     }
 
+    //User can delete his profile
+
+    async delete({params:{id},response}) {
+      
+     const user = await User.findOrFail(id)
+
+     await user.delete()
+
+     response.ok()
+    }
+
 }
 
 

@@ -63,12 +63,15 @@ class MovieController {
 
     if(isFavorite){
         await user.movies().detach(movie.id)
+        response.ok({
+          message:'Movie removed from Favourites'
+        })
     } else {
       await user.movies().attach(movie.id)
-    }
-
-    response.ok({
-    })
+      response.ok({
+        message:'Movie added to Favourites'
+      })
+    }    
   }
 
   //Admin can update movie by id

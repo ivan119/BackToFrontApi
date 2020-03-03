@@ -23,7 +23,7 @@ Route.group(()=>{
     Route.post('login','UserController.login') // Login User //
     Route.post('register','UserController.register') // Register User //
     Route.patch('update/:id','UserController.update')
-    Route.delete('logout','UserController.logout') // Do i even need this? //
+    Route.delete('delete/:id','UserController.delete') // Do i even need this? //
     Route.get('getuser','UserController.show').middleware(["getUser"]) //Get one user//
     Route.get('index','UserController.index') //Get all users by id and username //
     Route.get('getFavourite/:id','UserController.getFavourite') //Get all favouirte movies by User id //
