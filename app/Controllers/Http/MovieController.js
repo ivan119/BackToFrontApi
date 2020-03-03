@@ -9,19 +9,13 @@ const Movie = use('App/Models/Movie')
  * Resourceful controller for interacting with movies
  */
 class MovieController {
-  /**
-   * Show a list of all movies.
-   * GET movies
 
-   */
+  //Search,sort and paginte methods for movies
   async index ({ request, response, view }) {
+
     const allParams = request.get()
-    
     let page = allParams.page;
-  //  page = page ? page : 1;
-  //console.log(page)
     const perPage = allParams.perPage
-  //console.log(limit)
     const query =  Movie.query()
 
     if(allParams.search){
@@ -37,19 +31,10 @@ class MovieController {
 
   }
 
-  /**
-   * Render a form to be used for creating a new movie.
-   * GET movies/create
-   */
-
-  /**
-   * Create/save a new movie.
-   * POST movies
-
-   */
+  //Admin can store new movie
   async store ({ request, response }) {
-    const { title, vote_average, overview, release_date, cover_image, background_image } = request.post()
 
+    const { title, vote_average, overview, release_date, cover_image, background_image } = request.post()
     const movie = await Movie.create({ title, vote_average, overview, release_date, cover_image, background_image })
 
     response.ok({
@@ -58,9 +43,7 @@ class MovieController {
     })
   }
 
-  /**
-   * Display a single movie.
-   * GET movies/:id  */
+  //Get single movie by id
   async show ({ response, params:{id} }) {
         
     const movie = await Movie.findOrFail(id)
@@ -72,13 +55,12 @@ class MovieController {
       
   } 
 
-  /* Puts or deletes User id and Movie id in pivot table */
-
+  //Puts favourite movie or deletes it by id
   async favourite ({ params:{id}, response, user }){
-    const movie = await Movie.findOrFail(id)
 
+    const movie = await Movie.findOrFail(id)
     const isFavorite = await user.movies().where('id', movie.id).first()
-    // console.log(isFavorite)
+
     if(isFavorite){
         await user.movies().detach(movie.id)
     } else {
@@ -89,11 +71,7 @@ class MovieController {
     })
   }
 
-
-  /**
-   * Update movie details.
-   * PUT or PATCH movies/:id
-   */
+  //Admin can update movie by id
   async update ({ params: { id }, request, response }) {
 
     const { title, vote_average, overview, release_date, cover_image, background_image, movie } = request.post()
@@ -114,14 +92,9 @@ class MovieController {
 
   }
 
-  /**
-   * Delete a movie with id.
-   * DELETE movies/:id
-
-   */
+  //Admin can delete movie by id
   async delete ({ params: { id }, request, response }) {
 
-    //todo: popraviti
     const movie = await Movie.findOrFail(id)
 
     await movie.delete()

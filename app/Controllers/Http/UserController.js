@@ -5,6 +5,7 @@ const { validate } = use('Validator')
 
 class UserController {
 
+    // User can update profile, change his username,email,or password
     async update ({request,params:{id},response}){
 
       const user = await User.findOrFail(id)
@@ -39,18 +40,16 @@ class UserController {
     }
 
 
-    // Fetch all users from database
+    //Fetch all users from database id and username only
     async index({response}){
-      //todo: search, orderanje,
       const user = await User.query().select('id','username').fetch()
       response.ok(
         user
       )
     }
 
+    //Register user method
     async register({request, response}){
-
-      //validacija podataka email-a i sanitzirati, required
 
         const rules = {
           username: 'required|min:4|max:15|unique:users:username',
@@ -83,6 +82,7 @@ class UserController {
 
     }
 
+    //Login user base on auth
     async login({request,response,auth}){
       
           const {email, password} = request.post()
@@ -101,9 +101,10 @@ class UserController {
               token
             })
           }  
-          
+
     }
 
+    //Get user
     async show ({auth,params,response}){
       
         try{
@@ -113,6 +114,7 @@ class UserController {
         }
     }
 
+    //User favourite movies base on his id
     async getFavourite({params:{id},response}) {
 
       const favourite = await Movie.query().whereHas('users', subQuery =>{
